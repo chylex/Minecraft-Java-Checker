@@ -12,7 +12,7 @@ public final class JavaCheckerReporter implements IFMLCallHook{
 		if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_7)){
 			FMLRelaunchLog.severe(getConsoleReport());
 			JOptionPane.showMessageDialog(null, "<html>"+getWindowReport()+"</html>","Outdated Java",JOptionPane.ERROR_MESSAGE);
-            throw new OutdatedJavaException();
+            		throw new OutdatedJavaException();
 		}
 		
 		return null;
