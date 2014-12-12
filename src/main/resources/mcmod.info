@@ -1,0 +1,14 @@
+[
+{
+  "modid": "Java7Checker",
+  "name": "Java 7 Checker",
+  "description": "If you see this description inside Minecraft, then you're fine!",
+  "version": "1.0",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["chylex"],
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
