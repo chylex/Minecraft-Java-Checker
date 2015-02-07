@@ -26,7 +26,7 @@ public final class JavaCheckerReporter implements IFMLCallHook{
 	static String getConsoleReport(){
 		return new StringBuilder(242).append("\n")
 		.append("\n!! DO NOT REPORT !!\n\n")
-		.append("One of the mods requires Java 1.7 or newer, you are using ").append(SystemUtils.JAVA_VERSION).append(".\n")
+		.append("One of the mods requires Java "+minVersion.toString()+" or newer, you are using ").append(SystemUtils.JAVA_VERSION).append(".\n")
 		.append("Visit https://java.com/download/ for the latest version.\n")
 		.append("Please, uninstall the old version first to prevent further issues.")
 		.append("\n\n!! DO NOT REPORT !!\n")
@@ -35,7 +35,7 @@ public final class JavaCheckerReporter implements IFMLCallHook{
 	
 	static String getWindowReport(){
 		return new StringBuilder(230)
-		.append("One of the mods requires Java 1.7 or newer, you are using ").append(SystemUtils.JAVA_VERSION).append(".<br>")
+		.append("One of the mods requires Java "+minVersion.toString()+" or newer, you are using ").append(SystemUtils.JAVA_VERSION).append(".<br>")
 		.append("Visit <span style=\"color:red\">https://java.com/download/</span> for the latest version.<br>")
 		.append("Please, uninstall the old version first to prevent further issues.")
 		.toString();

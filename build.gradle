@@ -19,7 +19,7 @@ apply plugin: 'forge'
 
 version = ""
 group = "chylex.java7check"
-archivesBaseName = "Java7Checker  MC-1.8  v1.1"
+archivesBaseName = "Java7Checker  MC-1.8+  v1.1"
 
 minecraft {
     version = "1.8-11.14.1.1306"
@@ -40,7 +40,7 @@ task java8Jar(type: Jar, dependsOn: "jar") {
         attributes 'FMLCorePlugin': 'chylex.javacheck.Java8CheckerCoremod'
     }
     
-    baseName = "Java8Checker  MC-1.8  v1.1"
+    baseName = "Java8Checker  MC-1.8+  v1.1"
 }
 
 reobf {
