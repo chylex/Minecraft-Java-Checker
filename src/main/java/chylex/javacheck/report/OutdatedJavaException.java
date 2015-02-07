@@ -1,4 +1,4 @@
-package chylex.java7check.report;
+package chylex.javacheck.report;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 

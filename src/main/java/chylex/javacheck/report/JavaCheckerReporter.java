@@ -1,15 +1,17 @@
-package chylex.java7check.report;
+package chylex.javacheck.report;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import net.minecraftforge.fml.relauncher.FMLRelaunchLog;
+import net.minecraftforge.fml.relauncher.IFMLCallHook;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
-import cpw.mods.fml.relauncher.FMLRelaunchLog;
-import cpw.mods.fml.relauncher.IFMLCallHook;
 
 public final class JavaCheckerReporter implements IFMLCallHook{
+	public static JavaVersion minVersion = null;
+	
 	@Override
 	public Void call() throws Exception{
-		if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_7)){
+		if (!SystemUtils.isJavaVersionAtLeast(minVersion)){
 			FMLRelaunchLog.severe(getConsoleReport());
 			JOptionPane.showMessageDialog(null, "<html>"+getWindowReport()+"</html>","Outdated Java",JOptionPane.ERROR_MESSAGE);
             		throw new OutdatedJavaException();
