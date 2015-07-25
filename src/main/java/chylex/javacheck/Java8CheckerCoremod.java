@@ -1,8 +1,8 @@
 package chylex.javacheck;
 import java.util.Map;
-import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.apache.commons.lang3.JavaVersion;
 import chylex.javacheck.report.JavaCheckerReporter;
+import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 public class Java8CheckerCoremod implements IFMLLoadingPlugin{
 	@Override

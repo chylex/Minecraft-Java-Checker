@@ -1,10 +1,10 @@
 package chylex.javacheck.report;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import net.minecraftforge.fml.relauncher.FMLRelaunchLog;
-import net.minecraftforge.fml.relauncher.IFMLCallHook;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
+import cpw.mods.fml.relauncher.FMLRelaunchLog;
+import cpw.mods.fml.relauncher.IFMLCallHook;
 
 public final class JavaCheckerReporter implements IFMLCallHook{
 	public static JavaVersion minVersion = null;
