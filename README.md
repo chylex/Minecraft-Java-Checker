@@ -27,7 +27,6 @@ dependencies{
 <your mod info is somewhere here>
 
 minecraft{
-  <your workspace information is somewhere here>
   srgExtra "PK: chylex/javacheck <yourmodname>/shade/javacheck"
 }
 
