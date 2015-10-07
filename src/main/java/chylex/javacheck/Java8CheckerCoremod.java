@@ -8,7 +8,7 @@ public class Java8CheckerCoremod implements IFMLLoadingPlugin{
 	@Override
 	public String getSetupClass(){
 		JavaCheckerReporter.minVersion = JavaVersion.JAVA_1_8;
-		return "chylex.javacheck.report.JavaCheckerReporter";
+		return JavaCheckerReporter.class.getName();
 	}
 
 	@Override public String[] getASMTransformerClass(){ return null; }
