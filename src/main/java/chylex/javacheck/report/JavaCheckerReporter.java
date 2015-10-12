@@ -1,6 +1,7 @@
 package chylex.javacheck.report;
 import java.awt.Desktop;
-import java.awt.Font;
+import java.io.File;
+import java.util.List;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,6 +42,19 @@ public final class JavaCheckerReporter{
 			JOptionPane.showMessageDialog(null,pane,"Outdated Java",JOptionPane.ERROR_MESSAGE);
             throw new OutdatedJavaException();
 		}
+		else{
+			try{
+				Class cmm = findCoreModManager();
+				List coremods = (List)cmm.getMethod("getLoadedCoremods").invoke(null);
+				List reparsed = (List)cmm.getMethod("getReparseableCoremods").invoke(null);
+				
+				String myFile = new File(JavaCheckerReporter.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getName();
+				coremods.remove(myFile);
+				reparsed.add(myFile);
+			}catch(Throwable t){
+				t.printStackTrace();
+			}
+		}
 	}
 	
 	private static String getConsoleReport(JavaVersion minVersion){
@@ -68,6 +82,18 @@ public final class JavaCheckerReporter{
 		
 		try{
 			return Class.forName("net.minecraftforge.fml.relauncher.FMLRelaunchLog");
+		}catch(ClassNotFoundException e){}
+		
+		return null;
+	}
+	
+	private static Class findCoreModManager() throws Throwable{
+		try{
+			return Class.forName("cpw.mods.fml.relauncher.CoreModManager");
+		}catch(ClassNotFoundException e){}
+		
+		try{
+			return Class.forName("net.minecraftforge.fml.relauncher.CoreModManager");
 		}catch(ClassNotFoundException e){}
 		
 		return null;

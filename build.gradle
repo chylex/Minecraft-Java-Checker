@@ -44,11 +44,18 @@ task java8Jar(type: Jar, dependsOn: "jar"){
     archiveName = "Java8Checker"+archiveSuffix
 }
 
+task shadeJar(type: Jar, dependsOn: "jar"){
+    from sourceSets.main.output
+    
+    archiveName = "JavaCheckerShade"+archiveSuffix
+}
+
 jar.enabled = false
 
 reobf{
     reobf java7Jar{ classpath -> classpath = configurations.compile }
     reobf java8Jar{ classpath -> classpath = configurations.compile }
+    reobf shadeJar{ classpath -> classpath = configurations.compile }
 }
 
 reobf.enabled = false
