@@ -1,4 +1,5 @@
 You can download latest versions of Java Checker on CurseForge:
+
 http://minecraft.curseforge.com/projects/java-version-checker
 
 The mod is in Public Domain, feel free to do whatever you want with it! Hugs and mentions appreciated but not required. If you want to include Java Checker in your own mod, read the shading guide.
