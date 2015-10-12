@@ -17,32 +17,37 @@ buildscript{
 
 apply plugin: 'forge'
 
-version = ""
-group = "chylex.javacheck"
-archivesBaseName = "Java7Checker  MC-1.7.10  v1.1"
+String archiveSuffix = "  MC-UNIVERSAL  v1.2.jar"
 
 minecraft{
     version = "1.7.10-10.13.4.1492-1.7.10"
     assetDir = "eclipse/assets"
 }
 
-jar{
+task java7Jar(type: Jar, dependsOn: "jar"){
+    from sourceSets.main.output
+    
     manifest{
-        attributes 'FMLCorePlugin': 'chylex.javacheck.Java7CheckerCoremod'
+        attributes 'TweakClass': 'chylex.javacheck.Java7Checker'
     }
+    
+    archiveName = "Java7Checker"+archiveSuffix
 }
 
 task java8Jar(type: Jar, dependsOn: "jar"){
     from sourceSets.main.output
     
     manifest{
-        attributes 'FMLCorePlugin': 'chylex.javacheck.Java8CheckerCoremod'
+        attributes 'TweakClass': 'chylex.javacheck.Java8Checker'
     }
     
-    baseName = "Java8Checker  MC-1.7.10  v1.1"
+    archiveName = "Java8Checker"+archiveSuffix
 }
 
+jar.enabled = false
+
 reobf{
+    reobf java7Jar{ classpath -> classpath = configurations.compile }
     reobf java8Jar{ classpath -> classpath = configurations.compile }
 }
 
