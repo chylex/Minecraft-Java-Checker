@@ -1,62 +1,68 @@
-buildscript {
-    repositories {
+buildscript{
+    repositories{
         mavenCentral()
-        maven {
+        maven{
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
+        maven{
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
     }
-    dependencies {
+    dependencies{
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
 apply plugin: 'forge'
 
-version = ""
-group = "chylex.java7check"
-archivesBaseName = "Java7Checker  MC-1.8+  v1.1"
+String archiveSuffix = "  MC-UNIVERSAL  v1.2.jar"
 
-minecraft {
-    version = "1.8-11.14.1.1306"
-    assetDir = "eclipse/assets"
-    mappings = "snapshot_nodoc_20141130"
+minecraft{
+    version = "1.7.10-10.13.4.1492-1.7.10"
+    runDir = "eclipse"
 }
 
-jar {
-    manifest {
-        attributes 'FMLCorePlugin': 'chylex.javacheck.Java7CheckerCoremod'
-    }
-}
-
-task java8Jar(type: Jar, dependsOn: "jar") {
+task java7Jar(type: Jar, dependsOn: "jar"){
     from sourceSets.main.output
     
-    manifest {
-        attributes 'FMLCorePlugin': 'chylex.javacheck.Java8CheckerCoremod'
+    manifest{
+        attributes 'TweakClass': 'chylex.javacheck.Java7Checker'
     }
     
-    baseName = "Java8Checker  MC-1.8+  v1.1"
+    archiveName = "Java7Checker"+archiveSuffix
 }
 
-reobf {
-    reobf java8Jar { classpath -> classpath = configurations.compile }
+task java8Jar(type: Jar, dependsOn: "jar"){
+    from sourceSets.main.output
+    
+    manifest{
+        attributes 'TweakClass': 'chylex.javacheck.Java8Checker'
+    }
+    
+    archiveName = "Java8Checker"+archiveSuffix
 }
 
-processResources {
+jar.enabled = false
+
+reobf{
+    reobf java7Jar{ classpath -> classpath = configurations.compile }
+    reobf java8Jar{ classpath -> classpath = configurations.compile }
+}
+
+reobf.enabled = false
+
+processResources{
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
     
-    from(sourceSets.main.resources.srcDirs) {
+    from(sourceSets.main.resources.srcDirs){
         include 'mcmod.info'
         expand 'version':project.version, 'mcversion':project.minecraft.version
     }
     
-    from(sourceSets.main.resources.srcDirs) {
+    from(sourceSets.main.resources.srcDirs){
         exclude 'mcmod.info'
     }
 }
