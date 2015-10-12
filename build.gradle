@@ -21,7 +21,7 @@ String archiveSuffix = "  MC-UNIVERSAL  v1.2.jar"
 
 minecraft{
     version = "1.7.10-10.13.4.1492-1.7.10"
-    assetDir = "eclipse/assets"
+    runDir = "eclipse"
 }
 
 task java7Jar(type: Jar, dependsOn: "jar"){
@@ -50,6 +50,8 @@ reobf{
     reobf java7Jar{ classpath -> classpath = configurations.compile }
     reobf java8Jar{ classpath -> classpath = configurations.compile }
 }
+
+reobf.enabled = false
 
 processResources{
     inputs.property "version", project.version
