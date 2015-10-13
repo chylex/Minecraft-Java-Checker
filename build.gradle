@@ -24,7 +24,8 @@ group = "chylex.javacheck"
 ext.buildnumber = 0
 project.buildnumber = System.getenv('BUILD_NUMBER') == null ? "CUSTOM" : System.getenv('BUILD_NUMBER')
 
-version = project.hasProperty("mavendir") ? "--UNIVERSAL--v1.2--b"+project.buildnumber : "  MC-UNIVERSAL  v1.2"
+version = project.hasProperty("mavendir") ? "UNIVERSAL--v1.2--b"+project.buildnumber : "MC-UNIVERSAL  v1.2"
+String archiveSuffix = (project.hasProperty("mavendir") ? "--" : "  ")+version+".jar"
 
 minecraft{
     version = "1.7.10-10.13.4.1492-1.7.10"
@@ -38,7 +39,7 @@ task java7Jar(type: Jar, dependsOn: "jar"){
         attributes 'TweakClass': 'chylex.javacheck.Java7Checker'
     }
     
-    archiveName = "Java7Checker"+version+".jar"
+    archiveName = "Java7Checker"+archiveSuffix
 }
 
 task java8Jar(type: Jar, dependsOn: "jar"){
@@ -48,13 +49,13 @@ task java8Jar(type: Jar, dependsOn: "jar"){
         attributes 'TweakClass': 'chylex.javacheck.Java8Checker'
     }
     
-    archiveName = "Java8Checker"+version+".jar"
+    archiveName = "Java8Checker"+archiveSuffix
 }
 
 task shadeJar(type: Jar, dependsOn: "jar"){
     from sourceSets.main.output
     
-    archiveName = "JavaCheckerShade"+version+".jar"
+    archiveName = "JavaCheckerShade"+archiveSuffix
 }
 
 jar.enabled = false
