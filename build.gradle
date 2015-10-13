@@ -24,8 +24,8 @@ group = "chylex.javacheck"
 ext.buildnumber = 0
 project.buildnumber = System.getenv('BUILD_NUMBER') == null ? "CUSTOM" : System.getenv('BUILD_NUMBER')
 
-version = project.hasProperty("mavendir") ? "UNIVERSAL--v1.2--b"+project.buildnumber : "MC-UNIVERSAL  v1.2"
-String archiveSuffix = (project.hasProperty("mavendir") ? "--" : "  ")+version+".jar"
+version = project.hasProperty("mavendir") ? "-v1.2-b"+project.buildnumber : "MC-UNIVERSAL  v1.2"
+String archiveSuffix = (project.hasProperty("mavendir") ? "-" : "  ")+version+".jar"
 
 minecraft{
     version = "1.7.10-10.13.4.1492-1.7.10"
