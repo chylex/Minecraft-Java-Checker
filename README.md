@@ -8,7 +8,7 @@ The mod is in Public Domain, so do whatever you want with it! Hugs and mentions 
 
 *Warning: this is experimental, if you find any issues, please report them immediately.*
 
-You can insert Java Checker into your mod, so that it will alert the user if they are using outdated Java. You will need to download a special version designed for shading, you can find it on [CurseForge](http://minecraft.curseforge.com/projects/java-version-checker/files/2262108).
+You can insert Java Checker into your mod, so that it will alert the user if they are using outdated Java. You will need to use a special version designed for shading, you can use tterrag's Maven repository in your build.gradle or download it manually.
 
 This file will work fine for all Minecraft versions starting from 1.6.2. It can currently check for Java 7 or 8, based on how you configure it.
 
@@ -22,8 +22,15 @@ configurations{
 
 <your buildscript info is somewhere here>
 
+repositories{
+  maven{
+    name "tterrag Repo"
+    url "http://maven.tterrag.com/"
+  }
+}
+
 dependencies{
-  shade files('libs/JavaCheckerShade  MC-UNIVERSAL  v1.2.jar')
+  shade "chylex.javacheck:JavaChecker:v1.2-b1"
 }
 
 <your mod info is somewhere here>
@@ -42,6 +49,14 @@ jar{
   manifest{
     attributes 'TweakClass': '<yourmodname>.shade.javacheck.Java<version>Checker'
   }
+}
+```
+
+If you want [download the file](http://minecraft.curseforge.com/projects/java-version-checker/files/2262108) manually as a library, remove 'repositories' and replace the 'dependencies' block with:
+
+```
+dependencies{
+  files('libs/JavaCheckerShade  MC-UNIVERSAL  v1.2.jar')
 }
 ```
 
