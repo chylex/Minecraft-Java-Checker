@@ -58,12 +58,14 @@ task shadeJar(type: Jar, dependsOn: "jar"){
 jar.enabled = false
 
 reobf{
-    reobf java7Jar{ classpath -> classpath = configurations.compile }
-    reobf java8Jar{ classpath -> classpath = configurations.compile }
-    reobf shadeJar{ classpath -> classpath = configurations.compile }
+    java7Jar{ classpath = sourceSets.main.compileClasspath }
+    java8Jar{ classpath = sourceSets.main.compileClasspath }
+    shadeJar{ classpath = sourceSets.main.compileClasspath }
 }
 
-reobf.enabled = false
+reobfJar{
+    enabled = false
+}
 
 processResources{
     inputs.property "version", project.version
