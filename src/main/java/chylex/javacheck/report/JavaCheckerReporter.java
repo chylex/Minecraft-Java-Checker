@@ -45,8 +45,11 @@ public final class JavaCheckerReporter{
 		else{
 			try{
 				Class cmm = findCoreModManager();
-				List coremods = (List)cmm.getMethod("getLoadedCoremods").invoke(null);
-				List reparsed = (List)cmm.getMethod("getReparseableCoremods").invoke(null);
+				
+				List coremods = getListOrNullSafe(cmm,"getLoadedCoremods");
+				if (coremods == null)coremods = getListOrNullSafe(cmm,"getIgnoredMods");
+				
+				List reparsed = getListOrNullSafe(cmm,"getReparseableCoremods");
 				
 				String myFile = new File(JavaCheckerReporter.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getName();
 				coremods.remove(myFile);
@@ -95,6 +98,17 @@ public final class JavaCheckerReporter{
 		try{
 			return Class.forName("net.minecraftforge.fml.relauncher.CoreModManager");
 		}catch(ClassNotFoundException e){}
+		
+		return null;
+	}
+	
+	private static List getListOrNullSafe(Class cls, String methodName){
+		try{
+			return (List)cls.getMethod(methodName).invoke(null);
+		}catch(NoSuchMethodError e){
+		}catch(Throwable t){
+			t.printStackTrace();
+		}
 		
 		return null;
 	}
