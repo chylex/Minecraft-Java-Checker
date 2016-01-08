@@ -10,9 +10,9 @@ The mod is in Public Domain, so do whatever you want with it! Hugs and mentions 
 
 You can insert Java Checker into your mod, so that it will alert the user if they are using outdated Java. You will need to use a special version designed for shading, you can use tterrag's Maven repository in your build.gradle or download it manually.
 
-This file should work fine for all Minecraft versions since 1.6.2. It can currently check for Java 7 or 8, based on how you configure it.
+The shading library should work fine for all Minecraft versions since 1.6.2. It can currently check for Java 7 or 8, based on how you configure it.
 
-In order to shade and configure Java Checker, you need to update your **build.gradle** file. Use the following links as a guide, make sure to update everything in <> brackets.
+In order to shade and configure Java Checker, you need to update your **build.gradle** file. Use the following links as a guide, make sure to update everything in the <> brackets.
 
 [ForgeGradle 1.2 (Minecraft 1.7.10 and older)](https://github.com/chylex/Java-Checker/wiki/Shading-with-ForgeGradle-1.2)
 
