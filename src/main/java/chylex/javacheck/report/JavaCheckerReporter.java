@@ -105,7 +105,7 @@ public final class JavaCheckerReporter{
 	private static List getListOrNullSafe(Class cls, String methodName){
 		try{
 			return (List)cls.getMethod(methodName).invoke(null);
-		}catch(NoSuchMethodError e){
+		}catch(NoSuchMethodException e){
 		}catch(Throwable t){
 			t.printStackTrace();
 		}
