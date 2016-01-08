@@ -19,7 +19,7 @@ group = "chylex.javacheck"
 ext.buildnumber = 0
 project.buildnumber = System.getenv('BUILD_NUMBER') == null ? "CUSTOM" : System.getenv('BUILD_NUMBER')
 
-version = project.hasProperty("mavendir") ? "v1.2-b"+project.buildnumber : "MC-UNIVERSAL  v1.2"
+version = project.hasProperty("mavendir") ? "v1.3-b"+project.buildnumber : "MC-UNIVERSAL  v1.3"
 String archiveSuffix = (project.hasProperty("mavendir") ? "-" : "  ")+version+".jar"
 
 minecraft{
@@ -65,20 +65,6 @@ reobf{
 
 reobfJar{
     enabled = false
-}
-
-processResources{
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-    
-    from(sourceSets.main.resources.srcDirs){
-        include 'mcmod.info'
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-    
-    from(sourceSets.main.resources.srcDirs){
-        exclude 'mcmod.info'
-    }
 }
 
 publishing{
