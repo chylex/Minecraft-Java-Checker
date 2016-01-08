@@ -14,52 +14,12 @@ This file will work fine for all Minecraft versions starting from 1.6.2. It can 
 
 In order to shade and configure Java Checker, you need to update your **build.gradle** file. Use this as a guide, make sure to update everything in <> brackets.
 
-```
-configurations{
-  shade
-  compile.extendsFrom shade
-}
+[ForgeGradle 1.2 (Minecraft 1.7.10 and older)](https://github.com/chylex/Java-Checker/wiki/Shading-with-ForgeGradle-1.2)
 
-<your buildscript info is somewhere here>
-
-repositories{
-  maven{
-    name "tterrag Repo"
-    url "http://maven.tterrag.com/"
-  }
-}
-
-dependencies{
-  shade "chylex.javacheck:JavaChecker:v1.2-b1"
-}
-
-<your mod info is somewhere here>
-
-minecraft{
-  srgExtra "PK: chylex/javacheck <yourmodname>/shade/javacheck"
-}
-
-jar{
-  configurations.shade.each{ dep ->
-    from(project.zipTree(dep)){
-      exclude 'META-INF', 'META-INF/**', 'mcmod.info'
-    }
-  }
-  
-  manifest{
-    attributes 'TweakClass': '<yourmodname>.shade.javacheck.Java<version>Checker'
-  }
-}
-```
-
-If you want [download the file](http://minecraft.curseforge.com/projects/java-version-checker/files/2262108) manually as a library, remove 'repositories' and replace the 'dependencies' block with:
-
-```
-dependencies{
-  files('libs/JavaCheckerShade  MC-UNIVERSAL  v1.2.jar')
-}
-```
+[ForgeGradle 2.1 (Minecraft 1.8 and newer)](https://github.com/chylex/Java-Checker/wiki/Shading-with-ForgeGradle-2.1)
 
 You can also use [Hardcore Ender Expansion's build.gradle](https://github.com/chylex/Hardcore-Ender-Expansion/blob/master/build.gradle) as a reference.
 
-Now build the mod and run it to make sure nothing messed up. If you need help with something related to build.gradle, ask AbrarSyed because I have absolutely no idea what I'm doing :P.
+Now build the mod and run it to make sure nothing messed up. If the mod does not load, something might have changed in Forge which breaks a hack in the shading library. In that case, [create a new issue](https://github.com/chylex/Java-Checker/issues) and I will release an update.
+
+If you need help with something related to build.gradle, ask AbrarSyed because I have absolutely no idea what I'm doing :P.
