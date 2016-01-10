@@ -2,7 +2,7 @@ package chylex.javacheck.report;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-public class OutdatedJavaException extends RuntimeException{
+public final class OutdatedJavaException extends RuntimeException{
 	public OutdatedJavaException(){
 		setStackTrace(new StackTraceElement[0]);
 	}

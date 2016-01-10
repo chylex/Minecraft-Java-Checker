@@ -6,10 +6,10 @@ import net.minecraft.launchwrapper.LaunchClassLoader;
 import org.apache.commons.lang3.JavaVersion;
 import chylex.javacheck.report.JavaCheckerReporter;
 
-public class Java8Checker implements ITweaker{
+public final class Java8Checker implements ITweaker{
 	@Override
 	public void injectIntoClassLoader(LaunchClassLoader classLoader){
-		JavaCheckerReporter.run(JavaVersion.JAVA_1_8);
+		JavaVersionChecker.run(JavaVersion.JAVA_1_8);
 	}
 	
 	@Override

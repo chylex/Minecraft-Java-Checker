@@ -19,7 +19,7 @@ group = "chylex.javacheck"
 ext.buildnumber = 0
 project.buildnumber = System.getenv('BUILD_NUMBER') == null ? "CUSTOM" : System.getenv('BUILD_NUMBER')
 
-version = project.hasProperty("mavendir") ? "v1.3-b"+project.buildnumber : "MC-UNIVERSAL  v1.3"
+version = project.hasProperty("mavendir") ? "v2.0-b"+project.buildnumber : "MC-UNIVERSAL  v2.0"
 String archiveSuffix = (project.hasProperty("mavendir") ? "-" : "  ")+version+".jar"
 
 minecraft{

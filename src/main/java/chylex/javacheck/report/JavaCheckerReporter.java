@@ -1,5 +1,6 @@
 package chylex.javacheck.report;
 import java.awt.Desktop;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
 import javax.swing.JEditorPane;
@@ -10,106 +11,55 @@ import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
+import chylex.javacheck.util.ForgeCompatibility;
 
 public final class JavaCheckerReporter{
-	public static void run(JavaVersion minVersion){
-		if (minVersion == null || !SystemUtils.isJavaVersionAtLeast(minVersion)){
-			if (minVersion == null)minVersion = JavaVersion.JAVA_1_8;
-			
-			try{
-				Class relaunchLog = findRelaunchLog();
-				if (relaunchLog != null)relaunchLog.getMethod("severe",String.class,Object[].class).invoke(null,getConsoleReport(minVersion),new Object[0]);
-			}catch(Throwable t){}
-			
-			String style = "font-family:Dialog;font-size:12;font-weight:bold";
-			JEditorPane pane = new JEditorPane("text/html","<html><body style='"+style+"'>"+getWindowReport(minVersion)+"</body></html>");
-			pane.setBackground(new JLabel().getBackground());
-			pane.setEditable(false);
-			
-			pane.addHyperlinkListener(new HyperlinkListener(){
-				@Override
-				public void hyperlinkUpdate(HyperlinkEvent e){
-					if (e.getEventType() == EventType.ACTIVATED){
-						try{
-							if (Desktop.isDesktopSupported())Desktop.getDesktop().browse(e.getURL().toURI());
-						}catch(Exception ex){
-							ex.printStackTrace();
-						}
+	public static void reportOutdatedJava(JavaVersion minVersion){
+		String consoleReport = getConsoleReport(minVersion);
+		
+		if (!ForgeCompatibility.tryLog(consoleReport)){
+			System.out.println(consoleReport);
+		}
+		
+		if (!GraphicsEnvironment.isHeadless() && ForgeCompatibility.isClientSide()){
+			displayErrorPopup("Outdated Java",getHtmlReport(minVersion));
+		}
+	}
+	
+	private static void displayErrorPopup(String title, String contents){
+		JEditorPane pane = new JEditorPane("text/html","<html><body style='font-family:Dialog;font-size:12;font-weight:bold'>"+contents+"</body></html>");
+		pane.setBackground(new JLabel().getBackground());
+		pane.setEditable(false);
+		
+		pane.addHyperlinkListener(new HyperlinkListener(){
+			@Override
+			public void hyperlinkUpdate(HyperlinkEvent e){
+				if (e.getEventType() == EventType.ACTIVATED){
+					try{
+						if (Desktop.isDesktopSupported())Desktop.getDesktop().browse(e.getURL().toURI());
+					}catch(Exception ex){
+						ex.printStackTrace();
 					}
 				}
-			});
-			
-			JOptionPane.showMessageDialog(null,pane,"Outdated Java",JOptionPane.ERROR_MESSAGE);
-            throw new OutdatedJavaException();
-		}
-		else{
-			try{
-				Class cmm = findCoreModManager();
-				
-				List coremods = getListOrNullSafe(cmm,"getLoadedCoremods");
-				if (coremods == null)coremods = getListOrNullSafe(cmm,"getIgnoredMods");
-				
-				List reparsed = getListOrNullSafe(cmm,"getReparseableCoremods");
-				
-				String myFile = new File(JavaCheckerReporter.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getName();
-				coremods.remove(myFile);
-				reparsed.add(myFile);
-			}catch(Throwable t){
-				t.printStackTrace();
 			}
-		}
+		});
+		
+		JOptionPane.showMessageDialog(null,pane,title,JOptionPane.ERROR_MESSAGE);
 	}
 	
 	private static String getConsoleReport(JavaVersion minVersion){
-		return new StringBuilder(242).append("\n")
-		.append("\n!! DO NOT REPORT !!\n\n")
-		.append("One of the mods requires Java "+minVersion.toString()+" or newer, you are using ").append(SystemUtils.JAVA_VERSION).append(".\n")
-		.append("Visit https://java.com/download/ for the latest version.\n")
-		.append("Please, uninstall the old version first to prevent further issues.")
-		.append("\n\n!! DO NOT REPORT !!\n")
-		.toString();
+		return
+			"\n\n!! DO NOT REPORT !!\n\n"+
+			"One of the mods requires Java "+minVersion+" or newer, you are using "+SystemUtils.JAVA_VERSION+".\n"+
+			"Visit https://java.com/download/ for the latest version.\n"+
+			"Please, uninstall the old version first to prevent further issues."+
+			"\n\n!! DO NOT REPORT !!\n";
 	}
 	
-	private static String getWindowReport(JavaVersion minVersion){
-		return new StringBuilder(230)
-		.append("One of the mods requires Java "+minVersion.toString()+" or newer, you are using ").append(SystemUtils.JAVA_VERSION).append(".<br>")
-		.append("Visit <a href=\"https://java.com/download/\"><span style=\"color:blue\">https://java.com/download/</span></a> for the latest version.<br>")
-		.append("Please, uninstall the old version first to prevent further issues.")
-		.toString();
-	}
-	
-	private static Class findRelaunchLog() throws Throwable{
-		try{
-			return Class.forName("cpw.mods.fml.relauncher.FMLRelaunchLog");
-		}catch(ClassNotFoundException e){}
-		
-		try{
-			return Class.forName("net.minecraftforge.fml.relauncher.FMLRelaunchLog");
-		}catch(ClassNotFoundException e){}
-		
-		return null;
-	}
-	
-	private static Class findCoreModManager() throws Throwable{
-		try{
-			return Class.forName("cpw.mods.fml.relauncher.CoreModManager");
-		}catch(ClassNotFoundException e){}
-		
-		try{
-			return Class.forName("net.minecraftforge.fml.relauncher.CoreModManager");
-		}catch(ClassNotFoundException e){}
-		
-		return null;
-	}
-	
-	private static List getListOrNullSafe(Class cls, String methodName){
-		try{
-			return (List)cls.getMethod(methodName).invoke(null);
-		}catch(NoSuchMethodException e){
-		}catch(Throwable t){
-			t.printStackTrace();
-		}
-		
-		return null;
+	private static String getHtmlReport(JavaVersion minVersion){
+		return
+			"One of the mods requires Java "+minVersion+" or newer, you are using "+SystemUtils.JAVA_VERSION+".<br>"+
+			"Visit <a href=\"https://java.com/download/\"><span style=\"color:blue\">https://java.com/download/</span></a> for the latest version.<br>"+
+			"Please, uninstall the old version first to prevent further issues.";
 	}
 }
