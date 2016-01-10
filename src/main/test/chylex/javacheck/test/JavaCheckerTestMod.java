@@ -1,9 +1,8 @@
 package chylex.javacheck.test;
-import org.apache.commons.lang3.JavaVersion;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import chylex.javacheck.report.JavaCheckerReporter;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = "JavaCheckerTestMod")
 public class JavaCheckerTestMod{
