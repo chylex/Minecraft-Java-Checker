@@ -50,7 +50,9 @@ task java8Jar(type: Jar, dependsOn: "jar"){
 }
 
 task shadeJar(type: Jar, dependsOn: "jar"){
-    from sourceSets.main.output
+    from(sourceSets.main.output){
+        exclude "mcmod.info"
+    }
     
     archiveName = "JavaCheckerShade"+archiveSuffix
 }
