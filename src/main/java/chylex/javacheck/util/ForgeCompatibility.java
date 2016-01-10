@@ -49,7 +49,7 @@ public final class ForgeCompatibility{
 	
 	public static boolean isClientSide(){
 		try{
-			return Class.forName("net.minecraft.client.Minecraft") != null;
+			return Class.forName("net.minecraft.client.main.Main") != null;
 		}catch(ClassNotFoundException e){
 			return false;
 		}catch(Throwable t){
