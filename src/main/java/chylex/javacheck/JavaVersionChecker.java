@@ -42,7 +42,7 @@ public final class JavaVersionChecker{
 	
 	public static class ShadingException extends RuntimeException{
 		public ShadingException(){
-			super("An exception happened when updating the coremod list, the mod you are shading Java Checker in will not run without it. Please, report the stack traces above to "+issueReportSite);
+			super("An exception happened when updating the coremod list, the mod you are shading Java Checker in will not run without it. Please, report the issue to "+issueReportSite);
 		}
 	}
 }
