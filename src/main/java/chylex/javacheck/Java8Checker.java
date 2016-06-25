@@ -4,7 +4,6 @@ import java.util.List;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import org.apache.commons.lang3.JavaVersion;
-import chylex.javacheck.report.JavaCheckerReporter;
 
 public final class Java8Checker implements ITweaker{
 	@Override

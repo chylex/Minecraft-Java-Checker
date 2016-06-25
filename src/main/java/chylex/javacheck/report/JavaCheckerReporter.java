@@ -1,8 +1,6 @@
 package chylex.javacheck.report;
 import java.awt.Desktop;
 import java.awt.GraphicsEnvironment;
-import java.io.File;
-import java.util.List;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
