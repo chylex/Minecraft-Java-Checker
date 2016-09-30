@@ -20,12 +20,12 @@ public final class JavaCheckerReporter{
 		}
 		
 		if (!GraphicsEnvironment.isHeadless() && ForgeCompatibility.isClientSide()){
-			displayErrorPopup("Outdated Java",getHtmlReport(minVersion));
+			displayErrorPopup("Outdated Java", getHtmlReport(minVersion));
 		}
 	}
 	
 	private static void displayErrorPopup(String title, String contents){
-		JEditorPane pane = new JEditorPane("text/html","<html><body style='font-family:Dialog;font-size:12;font-weight:bold'>"+contents+"</body></html>");
+		JEditorPane pane = new JEditorPane("text/html", "<html><body style='font-family:Dialog;font-size:12;font-weight:bold'>"+contents+"</body></html>");
 		pane.setBackground(new JLabel().getBackground());
 		pane.setEditable(false);
 		
@@ -42,7 +42,7 @@ public final class JavaCheckerReporter{
 			}
 		});
 		
-		JOptionPane.showMessageDialog(null,pane,title,JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, pane, title, JOptionPane.ERROR_MESSAGE);
 	}
 	
 	private static String getConsoleReport(JavaVersion minVersion){

@@ -7,18 +7,18 @@ import java.util.List;
 public final class ForgeCompatibility{
 	public static boolean tryLog(String data){
 		try{
-			org.apache.logging.log4j.LogManager.getLogger("JavaChecker").log(org.apache.logging.log4j.Level.ERROR,data);
+			org.apache.logging.log4j.LogManager.getLogger("JavaChecker").log(org.apache.logging.log4j.Level.ERROR, data);
 			return true;
 		}catch(Throwable t){ // apache logging is not available
 			t.printStackTrace();
 		}
 		
 		try{
-			Class relaunchLog = findFMLClass("relaunch","FMLRelaunchLog");
-			Method logSevere = findMethod(relaunchLog,"severe",String.class,Object[].class);
+			Class relaunchLog = findFMLClass("relaunch", "FMLRelaunchLog");
+			Method logSevere = findMethod(relaunchLog, "severe", String.class, Object[].class);
 			
 			if (logSevere != null){
-				logSevere.invoke(null,data,new Object[0]);
+				logSevere.invoke(null, data, new Object[0]);
 				return true;
 			}
 		}catch(Throwable t){ // relaunch log not available
@@ -30,9 +30,9 @@ public final class ForgeCompatibility{
 	
 	public static boolean tryResetModState(){
 		try{
-			Class cmm = findFMLClass("relauncher","CoreModManager");
-			Method getCoremods = findMethodAlt(cmm,new String[]{ "getLoadedCoremods", "getIgnoredMods" });
-			Method getReparsed = findMethodAlt(cmm,new String[]{ "getReparseableCoremods" });
+			Class cmm = findFMLClass("relauncher", "CoreModManager");
+			Method getCoremods = findMethodAlt(cmm, new String[]{ "getLoadedCoremods", "getIgnoredMods" });
+			Method getReparsed = findMethodAlt(cmm, new String[]{ "getReparseableCoremods" });
 			
 			if (getCoremods == null || getReparsed == null)return false;
 			
@@ -76,7 +76,7 @@ public final class ForgeCompatibility{
 		if (cls == null)return null;
 		
 		try{
-			return cls.getMethod(methodName,params);
+			return cls.getMethod(methodName, params);
 		}catch(NoSuchMethodException e){}
 		
 		return null;
@@ -87,7 +87,7 @@ public final class ForgeCompatibility{
 		
 		for(String methodName:methodNames){
 			try{
-				return cls.getMethod(methodName,params);
+				return cls.getMethod(methodName, params);
 			}catch(NoSuchMethodException e){}
 		}
 		
